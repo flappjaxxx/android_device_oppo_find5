@@ -42,9 +42,11 @@ BOARD_KERNEL_PAGESIZE := 2048
 BOARD_KERNEL_CMDLINE := console=ttyHSL0,115200,n8 androidboot.hardware=find5 lpj=67677 user_debug=31 msm_rtb.filter=0x3F ehci-hcd.park=3
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 
+#4.6
+TARGET_GCC_VERSION := 4.6
+
 # Kernel
 TARGET_KERNEL_CONFIG := cyanogenmod_find5_defconfig
-TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6/bin/arm-eabi-
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
