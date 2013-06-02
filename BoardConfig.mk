@@ -44,6 +44,7 @@ BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02000000
 
 # Kernel
 TARGET_KERNEL_CONFIG := cyanogenmod_find5_defconfig
+TARGET_KERNEL_CUSTOM_TOOLCHAIN := arm-eabi-4.6/bin/arm-eabi-
 
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
