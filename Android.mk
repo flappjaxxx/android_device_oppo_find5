@@ -27,7 +27,7 @@ ifneq ($(filter find5,$(TARGET_DEVICE)),)
 
 LOCAL_PATH := $(call my-dir)
 
-ifdef($(TARGET_DEVICE),find5)
+ifdef ($(TARGET_DEVICE),find5)
 include $(CLEAR_VARS)
 LOCAL_MODULE       := wpa_supplicant.conf
 LOCAL_MODULE_TAGS  := optional
