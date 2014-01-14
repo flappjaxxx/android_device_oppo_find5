@@ -59,9 +59,9 @@
         <item>400</item>
         <item>500</item>
         <item>800</item>
-        <item>1000</item>
-        <item>1600</item>
+        <item>1500</item>
         <item>3000</item>
+        <item>5000</item>
         <item>10000</item>
     </integer-array>
 
@@ -77,10 +77,10 @@
         <item>71</item>   <!-- 200-400 -->
         <item>80</item>   <!-- 400-500 -->
         <item>96</item>   <!-- 500-800 -->
-        <item>108</item>  <!-- 800-1000 -->
-        <item>144</item>  <!-- 1000-1600 -->
-        <item>181</item>  <!-- 1600-3000 -->
-        <item>254</item>  <!-- 3000-10000 -->
+        <item>108</item>  <!-- 800-1500 -->
+        <item>144</item>  <!-- 1500-3000 -->
+        <item>181</item>  <!-- 3000-5000 -->
+        <item>220</item>  <!-- 5000-10000 -->
         <item>255</item>  <!-- 10000+ -->
     </integer-array>
 
@@ -89,23 +89,23 @@
          than the size of the config_autoBrightnessLevels array.
          This must be overridden in platform specific overlays -->
     <integer-array name="config_autoBrightnessButtonBacklightValues">
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
-        <item>0</item>
+        <item>14</item>   <!-- 0-10 -->
+        <item>28</item>   <!-- 10-50 -->
+        <item>37</item>   <!-- 50-100 -->
+        <item>51</item>   <!-- 100-200 -->
+        <item>71</item>   <!-- 200-400 -->
+        <item>80</item>   <!-- 400-500 -->
+        <item>96</item>   <!-- 500-800 -->
+        <item>108</item>  <!-- 800-1500 -->
+        <item>144</item>  <!-- 1500-3000 -->
+        <item>181</item>  <!-- 3000-5000 -->
+        <item>220</item>  <!-- 5000-10000 -->
+        <item>255</item>  <!-- 10000+ -->
     </integer-array>
 
     <!-- Minimum screen brightness setting allowed by the power manager.
          The user is forbidden from setting the brightness below this level. -->
-    <integer name="config_screenBrightnessSettingMinimum">1</integer>
+    <integer name="config_screenBrightnessSettingMinimum">2</integer>
 
     <!-- Maximum screen brightness allowed by the power manager.
          The user is forbidden from setting the brightness above this level. -->
@@ -113,12 +113,15 @@
 
     <!-- Default screen brightness setting.
          Must be in the range specified by minimum and maximum. -->
-    <integer name="config_screenBrightnessSettingDefault">100</integer>
+    <integer name="config_screenBrightnessSettingDefault">255</integer>
 
     <!-- Screen brightness used to dim the screen when the user activity
          timeout expires.  May be less than the minimum allowed brightness setting
          that can be set by the user. -->
     <integer name="config_screenBrightnessDim">20</integer>
+
+    <!-- Show translucent status bar on lockscreen by default -->
+    <bool name="config_enableLockScreenTranslucentDecor">true</bool>
 
     <!-- The duration (in milliseconds) that the radio will scan for a signal
          when there's no network connection. If the scan doesn't timeout, use zero -->
@@ -253,5 +256,8 @@
          it causes the device to wake up.
          The default is false. -->
     <bool name="config_lidControlsSleep">true</bool>
+
+    <!-- Device supports LED flashlight -->
+    <bool name="config_enableTorch">true</bool>
 
 </resources>

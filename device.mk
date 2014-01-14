@@ -35,10 +35,6 @@ PRODUCT_PACKAGES += \
     charger_res_images \
     charger
 
-# Vold and Storage
-PRODUCT_COPY_FILES += \
-        device/oppo/find5/configs/vold.fstab:system/etc/vold.fstab
-
 # Live Wallpapers
 PRODUCT_PACKAGES += \
         LiveWallpapers \
@@ -64,12 +60,11 @@ PRODUCT_COPY_FILES += \
 	device/oppo/find5/configs/fstab.find5:root/fstab.find5 \
 	device/oppo/find5/configs/ueventd.find5.rc:root/ueventd.find5.rc \
 	device/oppo/find5/configs/media_profiles.xml:system/etc/media_profiles.xml \
-	device/oppo/find5/configs/media_codecs.xml:system/etc/media_codecs.xml
-
+	device/oppo/find5/configs/media_codecs.xml:system/etc/media_codecs.xml \
+	device/oppo/find5/configs/audio_effects.conf:system/etc/audio_effects.conf
+	
 PRODUCT_COPY_FILES += \
-	device/oppo/find5/init.qcom.post_boot.sh:system/etc/init.qcom.post_boot.sh \
 	device/oppo/find5/init.qcom.post_fs.sh:system/etc/init.qcom.post_fs.sh \
-	device/oppo/find5/init.qcom.efs.sync.sh:system/etc/init.qcom.efs.sync.sh \
 	device/oppo/find5/init.qcom.mdm_links.sh:system/etc/init.qcom.mdm_links.sh \
 	device/oppo/find5/init.qcom.modem_links.sh:system/etc/init.qcom.modem_links.sh
 
@@ -116,22 +111,11 @@ PRODUCT_PACKAGES += \
     libnfc \
     libnfc_jni \
     Nfc \
-    Tag \
-    com.android.nfc_extras
+    Tag
 
 # NFC feature files
 PRODUCT_COPY_FILES += \
-    frameworks/native/data/etc/com.android.nfc_extras.xml:system/etc/permissions/com.android.nfc_extras.xml \
     frameworks/native/data/etc/android.hardware.nfc.xml:system/etc/permissions/android.hardware.nfc.xml
-
-# NFCEE access control
-ifeq ($(TARGET_BUILD_VARIANT),user)
-    NFCEE_ACCESS_PATH := device/oppo/find5/configs/nfcee_access.xml
-else
-    NFCEE_ACCESS_PATH := device/oppo/find5/configs/nfcee_access_debug.xml
-endif
-PRODUCT_COPY_FILES += \
-    $(NFCEE_ACCESS_PATH):system/etc/nfcee_access.xml
 
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.opengles.version=131072
@@ -139,12 +123,21 @@ PRODUCT_PROPERTY_OVERRIDES += \
 PRODUCT_PROPERTY_OVERRIDES += \
 	ro.sf.lcd_density=480
 
+# qcom
+PRODUCT_PROPERTY_OVERRIDES += \
+	ro.qc.sdk.audio.ssr=false \
+	ro.qc.sdk.audio.fluencetype=fluence \
+	ro.qc.sdk.sensors.gestures=false
+
 # Audio Configuration
 PRODUCT_PROPERTY_OVERRIDES += \
 	persist.audio.handset.mic=dmic \
 	persist.audio.fluence.mode=endfire \
 	persist.audio.lowlatency.rec=false \
-	af.resampler.quality=4
+	af.resampler.quality=4 \
+	lpa.decode=true \
+	tunnel.decode=false \
+	tunnel.audiovideo.decode=false
 
 # Debugging
 PRODUCT_PROPERTY_OVERRIDES += \
@@ -183,6 +176,7 @@ PRODUCT_PACKAGES += \
 	hwcomposer.msm8960 \
 	gralloc.msm8960 \
 	copybit.msm8960 \
+	memtrack.msm8960 \
 	lights.find5 \
 	camera-wrapper.msm8960
 
@@ -210,6 +204,10 @@ PRODUCT_PACKAGES += \
 	libOmxVdec \
 	libOmxVenc \
 	libOmxCore \
+    libOmxAacEnc \
+    libOmxAmrEnc \
+    libOmxEvrcEnc \
+    libOmxQcelp13Enc \
 	libstagefrighthw \
 	libc2dcolorconvert
 
@@ -245,16 +243,29 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
 	persist.sys.usb.config=mtp \
 	ro.adb.secure=0
 
-# for bugmailer
-PRODUCT_PACKAGES += send_bug
+# QCOM
+PRODUCT_PROPERTY_OVERRIDES += \
+    com.qc.hardware=true
+
+# QC Perf
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.vendor.extension_library=/system/lib/libqc-opt.so
+
+
+# other apps
+PRODUCT_PACKAGES += \
+	Find5Parts
+
+# selinux
+PRODUCT_PROPERTY_OVERRIDES += \
+    ro.build.selinux=1
+
+# SELinux filesystem labels
 PRODUCT_COPY_FILES += \
-	system/extras/bugmailer/bugmailer.sh:system/bin/bugmailer.sh \
-	system/extras/bugmailer/send_bug:system/bin/send_bug
-
+    device/oppo/find5/configs/50selinuxrelabel:system/etc/init.d/50selinuxrelabel
+	
 $(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
-
-# call hwui memory config
-$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
+$(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 # This is the find5-specific audio package
 $(call inherit-product, frameworks/base/data/sounds/AudioPackage10.mk)

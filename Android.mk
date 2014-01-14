@@ -27,16 +27,6 @@ ifneq ($(filter find5,$(TARGET_DEVICE)),)
 
 LOCAL_PATH := $(call my-dir)
 
-ifdef ($(TARGET_DEVICE),find5)
-include $(CLEAR_VARS)
-LOCAL_MODULE       := wpa_supplicant.conf
-LOCAL_MODULE_TAGS  := optional
-LOCAL_MODULE_CLASS := ETC
-LOCAL_SRC_FILES    := $(LOCAL_MODULE)
-LOCAL_MODULE_PATH  := $(TARGET_OUT_ETC)/wifi
-include $(BUILD_PREBUILT)
-endif
-
 include $(call all-makefiles-under,$(LOCAL_PATH))
 
 $(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wcd9310; \
@@ -44,5 +34,4 @@ $(shell mkdir -p $(TARGET_OUT_ETC)/firmware/wcd9310; \
     $(TARGET_OUT_ETC)/firmware/wcd9310/wcd9310_anc.bin; \
     ln -sf /data/misc/audio/mbhc.bin \
     $(TARGET_OUT_ETC)/firmware/wcd9310/wcd9310_mbhc.bin)
-
 endif
